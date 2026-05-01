@@ -733,7 +733,7 @@
 
     if (window.ttq) ttq.track('Contact', { content_name: 'CTA WhatsApp CycleFlow' });
 
-    sb.from('leads').insert({
+    sb.from('quiz_leads').insert({
       nome: nome.value.trim(),
       whatsapp: wpp.value.trim(),
       respostas: answers,

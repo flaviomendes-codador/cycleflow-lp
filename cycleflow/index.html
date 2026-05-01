@@ -1848,7 +1848,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* Calcula pontuação total */
     totalPoints = Object.values(answers).reduce((sum, a) => sum + (a.points || 0), 0);
 
-    sb.from('leads').insert({
+    sb.from('quiz_leads').insert({
       nome: name.value.trim(),
       whatsapp: phone.value.trim(),
       respostas: answers,
@@ -1887,7 +1887,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.ttq) ttq.track('Contact', { content_name: 'Agendamento Calendly CycleFlow' });
 
-    sb.from('leads').insert({
+    sb.from('quiz_leads').insert({
       nome: name.value.trim(),
       whatsapp: phone.value.trim(),
       email: email.value.trim(),
