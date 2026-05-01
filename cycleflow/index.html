@@ -1488,12 +1488,12 @@ section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
         </div>
         <h3>Seu cenário tem <span class="italic-gradient">alto potencial</span> de retenção</h3>
         <p>Pelas suas respostas, você está deixando muita receita na mesa todo mês. Quer descobrir como resolver isso em até 90 dias?</p>
-        <a href="https://calendly.com/SEU-LINK-AQUI" class="quiz-result-cta" id="calendlyLink" target="_blank" rel="noopener" onclick="if(window.ttq) ttq.track('Contact', {content_name: 'CTA Calendly CycleFlow'})">
+        <button class="quiz-result-cta" onclick="showCalendlyForm()">
           Agende sua reunião aqui
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </a>
+        </button>
       </div>
     </div>
 
@@ -1508,12 +1508,26 @@ section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
         </div>
         <h3>Recebemos seu diagnóstico</h3>
         <p>Pelas suas respostas, o CycleFlow ainda não é a melhor escolha para o seu momento. Mas quer descobrir como resolver isso em até 90 dias?</p>
-        <a href="https://calendly.com/SEU-LINK-AQUI" class="quiz-result-cta" target="_blank" rel="noopener" onclick="if(window.ttq) ttq.track('Contact', {content_name: 'CTA Calendly CycleFlow Warm'})">
+        <button class="quiz-result-cta" onclick="showCalendlyForm()">
           Agende sua reunião aqui
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </a>
+        </button>
+      </div>
+    </div>
+
+    <!-- Form antes do Calendly -->
+    <div class="quiz-step" data-step="form-calendly">
+      <div class="quiz-eyebrow">Quase lá</div>
+      <h3>Para confirmar seu lugar, precisamos de alguns dados</h3>
+      <p class="quiz-sub">Usamos apenas para enviar a confirmação da reunião.</p>
+      <input type="text" class="quiz-input" id="calName" placeholder="Seu nome" autocomplete="given-name">
+      <input type="tel" class="quiz-input" id="calPhone" placeholder="WhatsApp com DDD" autocomplete="tel">
+      <input type="email" class="quiz-input" id="calEmail" placeholder="Seu melhor e-mail" autocomplete="email">
+      <div class="quiz-actions">
+        <button class="quiz-btn quiz-btn-secondary" onclick="history.back(); return false;">← Voltar</button>
+        <button class="quiz-btn quiz-btn-primary" id="calSubmit">Ir para o agendamento →</button>
       </div>
     </div>
 
@@ -1855,6 +1869,34 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       showResult('warm');
     }
+  });
+
+  /* Form Calendly */
+  window.showCalendlyForm = function() {
+    document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+    document.querySelector('.quiz-step[data-step="form-calendly"]').classList.add('active');
+    progress.style.width = '100%';
+  };
+
+  document.getElementById('calSubmit').addEventListener('click', () => {
+    const name  = document.getElementById('calName');
+    const phone = document.getElementById('calPhone');
+    const email = document.getElementById('calEmail');
+
+    [name, phone, email].forEach(el => el.classList.remove('error'));
+
+    let valid = true;
+    if (!name.value.trim() || name.value.trim().length < 2) { name.classList.add('error'); valid = false; }
+    if (!phone.value.trim() || phone.value.replace(/\D/g, '').length < 10) { phone.classList.add('error'); valid = false; }
+    if (!email.value.trim() || !email.value.includes('@')) { email.classList.add('error'); valid = false; }
+    if (!valid) return;
+
+    if (window.ttq) ttq.track('Contact', { content_name: 'Agendamento Calendly CycleFlow' });
+
+    window.open(
+      `https://calendly.com/agenciaf-mendes/new-meeting?name=${encodeURIComponent(name.value.trim())}&email=${encodeURIComponent(email.value.trim())}&a1=${encodeURIComponent(phone.value.trim())}`,
+      '_blank'
+    );
   });
 
 });
