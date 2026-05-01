@@ -18,6 +18,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <style>
 :root {
@@ -1539,6 +1540,11 @@ section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const sb = window.supabase.createClient(
+    'https://wkxipimeaftbzfsvfnob.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndreGlwaW1lYWZ0Ynpmc3Zmbm9iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxODE3MzAsImV4cCI6MjA5MTc1NzczMH0.Srd0Ce78lvAY6gNbW0TUxSxJdEcGCSj3sC9m6VjOdj4'
+  );
+
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Lenis */
@@ -1842,26 +1848,14 @@ document.addEventListener('DOMContentLoaded', () => {
     /* Calcula pontuação total */
     totalPoints = Object.values(answers).reduce((sum, a) => sum + (a.points || 0), 0);
 
-    /* Lead data — pronto pra enviar via webhook */
-    const leadData = {
-      name: name.value.trim(),
-      phone: phone.value.trim(),
-      answers,
-      totalPoints,
-      classification: totalPoints >= 5 ? 'mql-hot' : 'lead-warm',
-      timestamp: new Date().toISOString()
-    };
-
-    /* TODO: trocar por chamada real de webhook (n8n / Make / Sheets / CRM) */
-    console.log('Lead capturado:', leadData);
-
-    /* Enviar pra rota de captura — descomentar e ajustar URL:
-    fetch('https://SEU-WEBHOOK-AQUI', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(leadData)
-    }).catch(err => console.error('Erro ao enviar lead:', err));
-    */
+    sb.from('leads').insert({
+      nome: name.value.trim(),
+      whatsapp: phone.value.trim(),
+      respostas: answers,
+      pontuacao: totalPoints,
+      classificacao: totalPoints >= 5 ? 'mql-hot' : 'lead-warm',
+      origem: 'cycleflow-quiz'
+    }).then(({ error }) => { if (error) console.error('Supabase:', error); });
 
     /* Roteamento */
     if (totalPoints >= 5 && answers.profissao && answers.profissao.points > 0) {
@@ -1892,6 +1886,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!valid) return;
 
     if (window.ttq) ttq.track('Contact', { content_name: 'Agendamento Calendly CycleFlow' });
+
+    sb.from('leads').insert({
+      nome: name.value.trim(),
+      whatsapp: phone.value.trim(),
+      email: email.value.trim(),
+      origem: 'cycleflow-calendly'
+    }).then(({ error }) => { if (error) console.error('Supabase:', error); });
 
     window.open(
       `https://calendly.com/agenciaf-mendes/new-meeting?name=${encodeURIComponent(name.value.trim())}&email=${encodeURIComponent(email.value.trim())}&a1=${encodeURIComponent(phone.value.trim())}`,
