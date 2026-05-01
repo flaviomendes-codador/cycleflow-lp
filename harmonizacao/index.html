@@ -603,6 +603,7 @@
 
   function openQuiz() {
     resetQuiz();
+    if (window.ttq) ttq.track('ViewContent', { content_name: 'Quiz Diagnóstico Harmonização' });
     document.getElementById('quiz-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -682,6 +683,7 @@
     document.getElementById('qm-r-body').innerHTML   = body;
 
     document.getElementById('qm-result').classList.add('active');
+    if (window.ttq) ttq.track('Lead', { content_name: 'Resultado Quiz', value: monthly, currency: 'BRL' });
 
     // Count-up animation
     const el = document.getElementById('qm-r-value');
@@ -700,6 +702,9 @@
   document.querySelectorAll('.quiz-trigger').forEach(el =>
     el.addEventListener('click', e => { e.preventDefault(); openQuiz(); })
   );
+  document.querySelector('.qm-cta').addEventListener('click', () => {
+    if (window.ttq) ttq.track('Contact', { content_name: 'CTA WhatsApp CycleFlow' });
+  });
   document.getElementById('quiz-close').addEventListener('click', closeQuiz);
   document.getElementById('qm-restart').addEventListener('click', resetQuiz);
   document.getElementById('quiz-overlay').addEventListener('click', e => {
