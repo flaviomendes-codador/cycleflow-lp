@@ -1057,13 +1057,6 @@ section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
   }
 }
 </style>
-  <!-- TikTok Pixel -->
-  <script>
-    !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
-    ttq.load('D7K3B9JC77UAJ1RPRM10');
-    ttq.page();
-  }(window,document,'ttq');
-  </script>
 </head>
 
 <body>
@@ -1365,7 +1358,6 @@ section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
   <div class="footer-inner">
     <div>© 2025 CycleFlow · Sistema de retenção para clínicas de harmonização</div>
     <div class="footer-links">
-      <a href="https://wa.me/5511999999999">WhatsApp</a>
       <a href="#">Política de Privacidade</a>
       <a href="#">Termos</a>
     </div>
@@ -1470,9 +1462,10 @@ section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
     <div class="quiz-step" data-step="6">
       <div class="quiz-eyebrow">Última etapa</div>
       <h3>Para onde envio o diagnóstico?</h3>
-      <p class="quiz-sub">Em até 24h úteis você recebe um cálculo personalizado da receita perdida com base nas suas respostas. Mensagem individualizada, no seu WhatsApp.</p>
-      <input type="text" class="quiz-input" id="leadName" placeholder="Como posso te chamar?" autocomplete="given-name">
+      <p class="quiz-sub">Em até 24h úteis você recebe um diagnóstico personalizado com base nas suas respostas. Chegará direto no seu WhatsApp e no seu e-mail.</p>
+      <input type="text" class="quiz-input" id="leadName" placeholder="Seu nome" autocomplete="given-name">
       <input type="tel" class="quiz-input" id="leadPhone" placeholder="WhatsApp com DDD" autocomplete="tel">
+      <input type="email" class="quiz-input" id="leadEmail" placeholder="Seu melhor e-mail" autocomplete="email">
       <div class="quiz-actions">
         <button class="quiz-btn quiz-btn-secondary" data-back>← Voltar</button>
         <button class="quiz-btn quiz-btn-primary" id="quizSubmit">Enviar diagnóstico →</button>
@@ -1489,11 +1482,8 @@ section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
         </div>
         <h3>Seu cenário tem <span class="italic-gradient">alto potencial</span> de retenção</h3>
         <p>Pelas suas respostas, você está deixando muita receita na mesa todo mês. Quer descobrir como resolver isso em até 90 dias?</p>
-        <a class="quiz-result-cta" href="https://calendly.com/agenciaf-mendes/new-meeting" target="_blank" rel="noopener">
-          Agende sua reunião aqui
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <a href="https://calendly.com/agenciaf-mendes/new-meeting" class="quiz-result-cta" id="calendlyLink" target="_blank" rel="noopener">
+          Agende sua reunião aqui →
         </a>
       </div>
     </div>
@@ -1508,27 +1498,10 @@ section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
           </svg>
         </div>
         <h3>Recebemos seu diagnóstico</h3>
-        <p>Pelas suas respostas, o CycleFlow ainda não é a melhor escolha para o seu momento. Mas quer descobrir como resolver isso em até 90 dias?</p>
-        <a class="quiz-result-cta" href="https://calendly.com/agenciaf-mendes/new-meeting" target="_blank" rel="noopener">
-          Agende sua reunião aqui
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8h10m0 0L9 4m4 4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- Form antes do Calendly -->
-    <div class="quiz-step" data-step="form-calendly">
-      <div class="quiz-eyebrow">Quase lá</div>
-      <h3>Para confirmar seu lugar, precisamos de alguns dados</h3>
-      <p class="quiz-sub">Usamos apenas para enviar a confirmação da reunião.</p>
-      <input type="text" class="quiz-input" id="calName" placeholder="Seu nome" autocomplete="given-name">
-      <input type="tel" class="quiz-input" id="calPhone" placeholder="WhatsApp com DDD" autocomplete="tel">
-      <input type="email" class="quiz-input" id="calEmail" placeholder="Seu melhor e-mail" autocomplete="email">
-      <div class="quiz-actions">
-        <button class="quiz-btn quiz-btn-secondary" onclick="history.back(); return false;">← Voltar</button>
-        <button class="quiz-btn quiz-btn-primary" id="calSubmit">Ir para o agendamento →</button>
+        <p>Pelas suas respostas, o CycleFlow ainda não é a melhor escolha para o seu momento. Vamos te mandar pelo WhatsApp 3 ações que você pode aplicar agora, sem precisar de sistema, para começar a reter melhor.</p>
+        <p style="font-size: 0.875rem; color: var(--creme-700); margin-top: 1rem;">
+          Quando sua base passar de 100 pacientes ativas e o volume de toxina aumentar, fale com a gente de novo.
+        </p>
       </div>
     </div>
 
@@ -1544,7 +1517,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'https://wkxipimeaftbzfsvfnob.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndreGlwaW1lYWZ0Ynpmc3Zmbm9iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxODE3MzAsImV4cCI6MjA5MTc1NzczMH0.Srd0Ce78lvAY6gNbW0TUxSxJdEcGCSj3sC9m6VjOdj4'
   );
-
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Lenis */
@@ -1758,7 +1730,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let totalPoints = 0;
 
   function openQuiz() {
-    if (window.ttq) ttq.track('ViewContent', { content_name: 'Quiz Diagnóstico CycleFlow' });
     overlay.classList.add('open');
     document.body.classList.add('modal-open');
     if (lenis) lenis.stop();
@@ -1823,16 +1794,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
     document.querySelector(`.quiz-step[data-step="result-${type}"]`).classList.add('active');
     progress.style.width = '100%';
-    if (window.ttq) ttq.track('Lead', { content_name: 'Resultado Quiz CycleFlow', content_type: type });
   }
 
   /* Submit quiz */
   submitBtn.addEventListener('click', () => {
     const name = document.getElementById('leadName');
     const phone = document.getElementById('leadPhone');
+    const email = document.getElementById('leadEmail');
 
     name.classList.remove('error');
     phone.classList.remove('error');
+    email.classList.remove('error');
 
     let valid = true;
     if (!name.value.trim() || name.value.trim().length < 2) {
@@ -1843,14 +1815,31 @@ document.addEventListener('DOMContentLoaded', () => {
       phone.classList.add('error');
       valid = false;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.value.trim() || !emailRegex.test(email.value.trim())) {
+      email.classList.add('error');
+      valid = false;
+    }
     if (!valid) return;
 
     /* Calcula pontuação total */
     totalPoints = Object.values(answers).reduce((sum, a) => sum + (a.points || 0), 0);
 
+    /* Lead data — pronto pra enviar via webhook */
+    const leadData = {
+      name: name.value.trim(),
+      email: email.value.trim(),
+      phone: phone.value.trim(),
+      answers,
+      totalPoints,
+      classification: totalPoints >= 5 ? 'mql-hot' : 'lead-warm',
+      timestamp: new Date().toISOString()
+    };
+
     sb.from('quiz_leads').insert({
       nome: name.value.trim(),
       whatsapp: phone.value.trim(),
+      email: email.value.trim(),
       respostas: answers,
       pontuacao: totalPoints,
       classificacao: totalPoints >= 5 ? 'mql-hot' : 'lead-warm',
@@ -1863,41 +1852,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       showResult('warm');
     }
-  });
-
-  /* Form Calendly */
-  window.showCalendlyForm = function() {
-    document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
-    document.querySelector('.quiz-step[data-step="form-calendly"]').classList.add('active');
-    progress.style.width = '100%';
-  };
-
-  document.getElementById('calSubmit').addEventListener('click', () => {
-    const name  = document.getElementById('calName');
-    const phone = document.getElementById('calPhone');
-    const email = document.getElementById('calEmail');
-
-    [name, phone, email].forEach(el => el.classList.remove('error'));
-
-    let valid = true;
-    if (!name.value.trim() || name.value.trim().length < 2) { name.classList.add('error'); valid = false; }
-    if (!phone.value.trim() || phone.value.replace(/\D/g, '').length < 10) { phone.classList.add('error'); valid = false; }
-    if (!email.value.trim() || !email.value.includes('@')) { email.classList.add('error'); valid = false; }
-    if (!valid) return;
-
-    if (window.ttq) ttq.track('Contact', { content_name: 'Agendamento Calendly CycleFlow' });
-
-    sb.from('quiz_leads').insert({
-      nome: name.value.trim(),
-      whatsapp: phone.value.trim(),
-      email: email.value.trim(),
-      origem: 'cycleflow-calendly'
-    }).then(({ error }) => { if (error) console.error('Supabase:', error); });
-
-    window.open(
-      `https://calendly.com/agenciaf-mendes/new-meeting?name=${encodeURIComponent(name.value.trim())}&email=${encodeURIComponent(email.value.trim())}&a1=${encodeURIComponent(phone.value.trim())}`,
-      '_blank'
-    );
   });
 
 });
