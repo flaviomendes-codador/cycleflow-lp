@@ -25,33 +25,8 @@
 }
 body { font-family: -apple-system, 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-/* ── AUTH ── */
-#auth-gate {
-  display: flex; align-items: center; justify-content: center;
-  min-height: 100vh;
-}
-.auth-box {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px; padding: 48px 40px; width: 360px; text-align: center;
-}
-.auth-box h2 { font-size: 22px; margin-bottom: 8px; }
-.auth-box p  { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
-.auth-input {
-  width: 100%; background: rgba(255,255,255,.06); border: 1px solid var(--border);
-  border-radius: 10px; padding: 14px 16px; color: var(--text); font-size: 15px;
-  margin-bottom: 12px; outline: none; transition: border-color .2s;
-}
-.auth-input:focus { border-color: var(--rose); }
-.auth-btn {
-  width: 100%; background: linear-gradient(135deg, var(--crimson), var(--rose));
-  color: #fff; border: none; border-radius: 10px; padding: 14px;
-  font-size: 15px; font-weight: 600; cursor: pointer; transition: opacity .2s;
-}
-.auth-btn:hover { opacity: .88; }
-.auth-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
-
 /* ── APP ── */
-#app { display: none; padding: 28px 32px; max-width: 1280px; margin: 0 auto; }
+#app { padding: 28px 32px; max-width: 1280px; margin: 0 auto; }
 
 /* Header */
 .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
@@ -157,22 +132,6 @@ tr:hover td { background: rgba(255,255,255,.02); }
 </head>
 <body>
 
-<!-- AUTH -->
-<div id="auth-gate">
-  <div class="auth-box">
-    <div style="margin-bottom:20px">
-      <div style="width:48px;height:48px;background:linear-gradient(135deg,#9B1B4F,#D4607A);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-      </div>
-      <h2>CycleFlow CRM</h2>
-      <p>Digite a senha para acessar o painel de leads</p>
-    </div>
-    <input type="password" class="auth-input" id="pwd" placeholder="Senha" onkeydown="if(event.key==='Enter') login()">
-    <button class="auth-btn" onclick="login()">Entrar</button>
-    <div class="auth-error" id="auth-err">Senha incorreta</div>
-  </div>
-</div>
-
 <!-- APP -->
 <div id="app">
 
@@ -263,7 +222,6 @@ tr:hover td { background: rgba(255,255,255,.02); }
 'use strict';
 
 /* ── CONFIG ── */
-const SENHA = 'cycleflow2026';
 const SUPABASE_URL  = 'https://wkxipimeaftbzfsvfnob.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndreGlwaW1lYWZ0Ynpmc3Zmbm9iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxODE3MzAsImV4cCI6MjA5MTc1NzczMH0.Srd0Ce78lvAY6gNbW0TUxSxJdEcGCSj3sC9m6VjOdj4';
 
@@ -272,18 +230,7 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 let allLeads   = [];
 let activeFilter = 'all';
 
-/* ── AUTH ── */
-function login() {
-  const val = document.getElementById('pwd').value;
-  if (val === SENHA) {
-    document.getElementById('auth-gate').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    loadLeads();
-  } else {
-    document.getElementById('auth-err').style.display = 'block';
-    setTimeout(() => document.getElementById('auth-err').style.display = 'none', 2500);
-  }
-}
+loadLeads();
 
 /* ── LOAD ── */
 async function loadLeads() {
